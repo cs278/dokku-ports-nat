@@ -1,6 +1,15 @@
 #!/usr/bin/env bash
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
-env
+APP_NAME="$1"
 
-echo "$@"
+APP="$1"; shift
+INTERNAL_PORT="$1"; shift
+INTERNAL_IP_ADDRESS="$1"; shift
+
+case "$APP" in
+  dns)
+    iptables -t nat -I 2 PREROUTING -i eth0 -p tcp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
+    iptables -t nat -I 2 PREROUTING -i eth0 -p udp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
+  ;;
+esac
