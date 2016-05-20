@@ -2,3 +2,5 @@
 set -eo pipefail; [[ $DOKKU_TRACE ]] && set -x
 
 env
+
+echo "$@"
