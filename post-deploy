@@ -9,7 +9,7 @@ INTERNAL_IP_ADDRESS="$1"; shift
 
 case "$APP" in
   dns)
-    iptables -t nat -I 2 PREROUTING -i eth0 -p tcp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
-    iptables -t nat -I 2 PREROUTING -i eth0 -p udp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
+    iptables -t nat -I PREROUTING 2 -i eth0 -p tcp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
+    iptables -t nat -I PREROUTING 2 -i eth0 -p udp --dport 53 -j REDIRECT --to-port $INTERNAL_PORT
   ;;
 esac
